@@ -282,3 +282,28 @@ print(x[0][2][2])
 
 # Index on x to return 3, 6, 9
 print(x[:, :, 2])
+
+
+### Setup device agnostic code
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print(device)
+
+# Count number of GPUs
+print(torch.cuda.device_count())
+
+# Create a tensor (default on the CPU)
+tensor = torch.tensor([1, 2, 3])
+print(tensor, tensor.device)
+
+tensor_on_gpu = tensor.to(device)
+print(tensor_on_gpu, tensor_on_gpu.device)
+
+
+### Move tensors back to the CPU
+
+# If tensor is on GPU, can't transform it to NumPy
+print(tensor_on_gpu.numpy())
+
+# Move tensor back to CPU
+tensor_back_on_cpu = tensor_on_gpu.cpu().numpy()
+print(tensor_back_on_cpu)
